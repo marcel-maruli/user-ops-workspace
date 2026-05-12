@@ -10,7 +10,7 @@ interface TableProps<T> {
   data: T[];
   columns: Column<T>[];
   onRowClick?: (item: T) => void;
-  isLoading?: boolean; // Prop baru untuk loading state
+  isLoading?: boolean;
 }
 
 export default function Table<T extends { id: number | string }>({
@@ -48,7 +48,6 @@ export default function Table<T extends { id: number | string }>({
               </tr>
             ))
           ) : data.length > 0 ? (
-            // TAMBAHKAN index di sini agar bisa digunakan oleh kolom
             data.map((item, index) => (
               <tr
                 key={item.id}
@@ -64,15 +63,13 @@ export default function Table<T extends { id: number | string }>({
                     className="whitespace-nowrap px-4 py-3 text-gray-700"
                   >
                     {col.render
-                      ? // KIRIMKAN index sebagai parameter kedua ke fungsi render
-                        col.render(item, index)
+                      ? col.render(item, index)
                       : (item[col.key as keyof T] as React.ReactNode)}
                   </td>
                 ))}
               </tr>
             ))
           ) : (
-            /* EMPTY STATE */
             <tr>
               <td
                 colSpan={columns.length}
