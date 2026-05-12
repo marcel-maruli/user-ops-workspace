@@ -1,9 +1,9 @@
 import https from "@/libs/https";
-import { HttpResponseUser, HttpResponseUserDetail, UserDetailPayload } from "../models/users";
+import { GetUser, HttpResponseUser, HttpResponseUserDetail, UserDetailPayload } from "../models/users";
 
-export const getAllUsers = async (): Promise<HttpResponseUser> => {
+export const getAllUsers = async (): Promise<GetUser[]> => {
   try {
-    const response = await https.get<HttpResponseUser>("/users");
+    const response = await https.get<GetUser[]>("/users");
     return response.data;
   } catch (error) {
     console.error(error);

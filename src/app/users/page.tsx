@@ -1,5 +1,4 @@
-import React from "react";
-import ResponsiveLayout from "../../components/ResponsiveLayout";
+import ResponsiveLayout from "@/components/ResponsiveLayout";
 import UsersDesktop from "./Desktop/page";
 import UsersMobile from "./Mobile/page";
 
