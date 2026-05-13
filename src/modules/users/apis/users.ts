@@ -13,7 +13,7 @@ export const getAllUsers = async (): Promise<GetUser[]> => {
 
 export const getUserDetail = async ({ id }: UserDetailPayload) => {
   try {
-    const response = await https.get<HttpResponseUserDetail>(`/users/${id}`);
+    const response = await https.get<GetUser>(`/users/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);

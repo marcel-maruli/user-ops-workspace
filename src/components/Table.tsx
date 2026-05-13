@@ -3,17 +3,17 @@ import React from "react";
 export interface Column<T> {
   header: string;
   key: keyof T | string;
-  render?: (item: T, index: number) => React.ReactNode;
+  render?: (item?: T, index?: number) => React.ReactNode;
 }
 
 interface TableProps<T> {
-  data: T[];
+  data?: T[];
   columns: Column<T>[];
   onRowClick?: (item: T) => void;
   isLoading?: boolean;
 }
 
-export default function Table<T extends { id: number | string }>({
+export default function Table<T extends { id?: number | string }>({
   data,
   columns,
   onRowClick,
@@ -29,7 +29,7 @@ export default function Table<T extends { id: number | string }>({
                 key={idx}
                 className="whitespace-nowrap px-4 py-3 text-left font-semibold text-gray-900"
               >
-                {col.header}
+                {col?.header}
               </th>
             ))}
           </tr>
@@ -47,8 +47,8 @@ export default function Table<T extends { id: number | string }>({
                 ))}
               </tr>
             ))
-          ) : data.length > 0 ? (
-            data.map((item, index) => (
+          ) : Number(data?.length) > 0 ? (
+            data?.map((item, index) => (
               <tr
                 key={item.id}
                 onClick={() => onRowClick?.(item)}
@@ -57,14 +57,14 @@ export default function Table<T extends { id: number | string }>({
                   ${onRowClick ? "cursor-pointer hover:bg-blue-50/50" : "hover:bg-gray-50/80"}
                 `}
               >
-                {columns.map((col, idx) => (
+                {columns?.map((col, idx) => (
                   <td
                     key={idx}
                     className="whitespace-nowrap px-4 py-3 text-gray-700"
                   >
-                    {col.render
-                      ? col.render(item, index)
-                      : (item[col.key as keyof T] as React.ReactNode)}
+                    {col?.render
+                      ? col?.render(item, index)
+                      : (item[col?.key as keyof T] as React.ReactNode)}
                   </td>
                 ))}
               </tr>
@@ -72,7 +72,7 @@ export default function Table<T extends { id: number | string }>({
           ) : (
             <tr>
               <td
-                colSpan={columns.length}
+                colSpan={columns?.length}
                 className="px-4 py-12 text-center text-gray-500 italic"
               >
                 No data available.

@@ -11,7 +11,7 @@ export const useQueryGetAllUsers = (
     ...options,
   });
 
-export const useQueryGetUserDetail = () => useMutation<HttpResponseUserDetail, unknown, UserDetailPayload>({
+export const useQueryGetUserDetail = () => useMutation<GetUser, unknown, UserDetailPayload>({
   mutationKey: ["user-detail"],
   mutationFn: (id: UserDetailPayload) => getUserDetail(id),
 });

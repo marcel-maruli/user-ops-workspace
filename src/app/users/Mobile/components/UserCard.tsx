@@ -16,8 +16,8 @@ interface UserCardProps {
 }
 
 const UserCard = ({ user, index, onClick }: UserCardProps) => {
-  const initials = user.name
-    .split(" ")
+  const initials = user?.name
+    ?.split(" ")
     .map((n) => n[0])
     .join("")
     .toUpperCase()
@@ -25,7 +25,7 @@ const UserCard = ({ user, index, onClick }: UserCardProps) => {
 
   return (
     <div
-      onClick={() => onClick?.(user.id)}
+      onClick={() => onClick?.(Number(user?.id))}
       className="group bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-md active:scale-[0.98] transition-all duration-200 cursor-pointer"
     >
       <div className="flex justify-between items-start mb-4">
