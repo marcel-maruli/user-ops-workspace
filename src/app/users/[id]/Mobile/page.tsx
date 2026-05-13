@@ -20,7 +20,7 @@ import MainLayout from "@/components/MainLayout";
 
 const UserDetailMobile = () => {
   const { showToast } = useToast();
-  const { back, push } = useRouter();
+  const { push } = useRouter();
   const { id } = useParams();
 
   const { setUserDetail } = useContext(DetailUserContext);
@@ -39,7 +39,7 @@ const UserDetailMobile = () => {
 
   const userTodos = useMemo(
     () => todos?.filter((todo) => todo.userId == Number(id)),
-    [posts, isLoadingPosts, id],
+    [todos, isLoadingTodos, id],
   );
 
   useEffect(() => {
@@ -151,7 +151,10 @@ const UserDetailMobile = () => {
 };
 
 const UserDetailMobileSkeleton = () => (
-  <div className="w-full bg-white rounded-2xl border border-gray-200 animate-pulse overflow-hidden">
+  <div
+    className="w-full bg-white rounded-2xl border border-gray-200 animate-pulse overflow-hidden"
+    data-testid="skeleton"
+  >
     <div className="bg-slate-50 p-6 flex flex-col items-center">
       <div className="h-20 w-20 bg-gray-200 rounded-2xl mb-3" />
       <div className="h-5 w-32 bg-gray-200 rounded mb-2" />

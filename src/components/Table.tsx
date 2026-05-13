@@ -39,7 +39,11 @@ export default function Table<T extends { id?: number | string }>({
           {/* SKELETON */}
           {isLoading ? (
             [...Array(5)].map((_, i) => (
-              <tr key={`skeleton-${i}`} className="animate-pulse">
+              <tr
+                key={`skeleton-${i}`}
+                className="animate-pulse"
+                data-testid="skeleton"
+              >
                 {columns.map((_, j) => (
                   <td key={`cell-${j}`} className="px-4 py-4">
                     <div className="h-4 bg-gray-200 rounded w-full"></div>

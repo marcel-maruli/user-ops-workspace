@@ -45,6 +45,7 @@ const Select = ({ options, value, onChange, placeholder }: SelectProps) => {
 
   const OptionItem = ({ opt }: { opt: Option }) => (
     <li
+      data-testid={`select-option-${opt.value}`}
       onClick={() => {
         onChange(opt.value);
         setOpen(false);
@@ -63,6 +64,7 @@ const Select = ({ options, value, onChange, placeholder }: SelectProps) => {
   return (
     <div className="relative w-full" ref={ref}>
       <button
+        data-testid="select-button"
         type="button"
         onClick={() => setOpen(!open)}
         className={`w-full flex items-center justify-between p-3 text-sm rounded-xl border transition-all ${
