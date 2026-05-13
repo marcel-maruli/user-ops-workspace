@@ -1,5 +1,5 @@
 import https from "@/libs/https";
-import { GetUser, HttpResponseUser, HttpResponseUserDetail, UserDetailPayload } from "../models/users";
+import { GetUser,  HttpResponseUserDetail, UserDetailPayload } from "../models/users";
 
 export const getAllUsers = async (): Promise<GetUser[]> => {
   try {

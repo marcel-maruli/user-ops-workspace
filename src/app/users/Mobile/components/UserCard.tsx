@@ -4,8 +4,9 @@ import {
   Globe,
   Building2,
   ChevronRight,
-  PersonStanding,
   IdCard,
+  ActivityIcon,
+  PenSquareIcon,
 } from "lucide-react";
 
 interface UserCardProps {
@@ -53,7 +54,6 @@ const UserCard = ({ user, index, onClick }: UserCardProps) => {
             ID Number: {user.id || "No Company"}
           </p>
         </div>
-
         <div className="flex items-center gap-2 text-gray-600">
           <Building2 size={14} className="text-gray-400" />
           <p className="text-xs truncate font-medium">
@@ -71,6 +71,29 @@ const UserCard = ({ user, index, onClick }: UserCardProps) => {
           <p className="text-xs text-blue-500 hover:underline">
             {user.website}
           </p>
+        </div>
+        <div className="flex items-center gap-2 text-gray-600">
+          <ActivityIcon size={14} className="text-gray-400" />
+          <div className="flex gap-4">
+            <div>
+              <p className="text-xs">Completed Todos:</p>
+              <p className="text-xs text-green-600 font-bold hover:underline">
+                {user.completedTodos}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs">Pending Todos:</p>
+              <p className="text-xs text-red-500 font-bold hover:underline">
+                {user.pendingTodos}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 text-gray-600">
+          <PenSquareIcon size={14} className="text-gray-400" />
+          <div>
+            <p className="text-xs text-black">Total Post: {user.totalPosts}</p>
+          </div>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
-import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useMutation,  useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { getAllUsers, getUserDetail } from "../apis/users";
-import { GetUser, HttpResponseUserDetail, UserDetailPayload, type HttpResponseUser } from "../models/users";
+import { GetUser, HttpResponseUserDetail, UserDetailPayload } from "../models/users";
 
 export const useQueryGetAllUsers = (
   options?: Omit<UseQueryOptions<GetUser[]>, "queryKey" | "queryFn">,

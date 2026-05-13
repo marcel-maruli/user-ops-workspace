@@ -3,26 +3,62 @@
 import { useQueryGetAllUsers } from "@/modules/users/contexts/users";
 import { Fragment, useMemo, useState } from "react";
 import UserCard from "./components/UserCard";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { useDisclosure } from "@/utils/useDisclosure";
 import Select from "@/components/Select";
+import { useQueryGetAllPosts } from "@/modules/posts/contexts/posts";
+import { useQueryGetAllTodos } from "@/modules/todos/contexts/todos";
 
-const SORT_OPTIONS = [
-  { label: "Sort: A - Z", value: "name-asc" },
-  { label: "Sort: Z - A", value: "name-desc" },
-  { label: "Sort: ID Smallest", value: "id-asc" },
-  { label: "Sort: ID Largest", value: "id-desc" },
+export const SORT_GROUPS = [
+  {
+    label: "Alphabetical",
+    options: [
+      { value: "name-asc", label: "Name (A-Z)" },
+      { value: "name-desc", label: "Name (Z-A)" },
+    ],
+  },
+  {
+    label: "Sequence",
+    options: [
+      { value: "id-asc", label: "ID (Low to High)" },
+      { value: "id-desc", label: "ID (High to Low)" },
+    ],
+  },
+  {
+    label: "Task Status",
+    options: [
+      { value: "pendingTodos-asc", label: "Pending (Least First)" },
+      { value: "pendingTodos-desc", label: "Pending (Most First)" },
+      { value: "completedTodos-asc", label: "Completed (Least First)" },
+      { value: "completedTodos-desc", label: "Completed (Most First)" },
+    ],
+  },
 ];
 
 const UsersMobile = () => {
-  const { isOpen, onToggle, onClose, onOpen } = useDisclosure();
   const [filter, setFilter] = useState({ search: "", sort: "name-asc" });
   const { data, isLoading } = useQueryGetAllUsers();
+  const { data: posts, isLoading: isLoadingPosts } = useQueryGetAllPosts();
+  const { data: todos, isLoading: isLoadingTodos } = useQueryGetAllTodos();
+
+  const mappedUsersData = useMemo(
+    () =>
+      data?.map((item) => {
+        const totalTodos = todos?.filter((todo) => todo.userId == item.id);
+        return {
+          ...item,
+          totalPosts: posts?.filter((post) => post.userId == item.id).length,
+          completedTodos: totalTodos?.filter((todo) => todo.completed === true)
+            .length,
+          pendingTodos: totalTodos?.filter((todo) => todo.completed === false)
+            .length,
+        };
+      }),
+    [data, posts, todos],
+  );
 
   const userList = useMemo(() => {
-    if (!data) return [];
+    if (!mappedUsersData) return [];
 
-    let result = [...data].filter((user) =>
+    let result = [...mappedUsersData].filter((user) =>
       user.name.toLowerCase().includes(filter.search.toLowerCase()),
     );
 
@@ -36,6 +72,14 @@ const UsersMobile = () => {
           return a.id - b.id;
         case "id-desc":
           return b.id - a.id;
+        case "pendingTodos-asc":
+          return (a.pendingTodos ?? 0) - (b.pendingTodos ?? 0);
+        case "pendingTodos-desc":
+          return (b.pendingTodos ?? 0) - (a.pendingTodos ?? 0);
+        case "completedTodos-asc":
+          return (a.completedTodos ?? 0) - (b.completedTodos ?? 0);
+        case "completedTodos-desc":
+          return (b.completedTodos ?? 0) - (a.completedTodos ?? 0);
         default:
           return 0;
       }
@@ -43,6 +87,10 @@ const UsersMobile = () => {
 
     return result;
   }, [data, filter]);
+
+  const handleRemoveFilter = () => {
+    setFilter({ search: "", sort: "name-asc" });
+  };
 
   return (
     <div className="p-4">
@@ -58,15 +106,23 @@ const UsersMobile = () => {
           />
 
           <Select
-            options={SORT_OPTIONS}
+            options={SORT_GROUPS}
             value={filter.sort}
             onChange={(val) => setFilter((prev) => ({ ...prev, sort: val }))}
             placeholder="Select sorting..."
           />
         </div>
+        <div className="flex pt-4 justify-end">
+          <button
+            onClick={handleRemoveFilter}
+            className="text-sm text-blue-600 font-bold hover:text-blue-800"
+          >
+            Clear Filter
+          </button>
+        </div>
       </div>
 
-      <div className="space-y-4 pt-30">
+      <div className="space-y-4 pt-40">
         {isLoading ? (
           [...Array(5)].map((_, i) => (
             <div
