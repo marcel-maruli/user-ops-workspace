@@ -1,5 +1,8 @@
 ## Getting Started
 
+Clone this project to your device or you can go through this deployment link if you just want to see the project not the code:
+[DEPLOYMENT LINK](https://user-ops-workspace.vercel.app/users)
+
 First, run the development server:
 
 ```bash
