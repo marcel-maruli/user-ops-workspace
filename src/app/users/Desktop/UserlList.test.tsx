@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Table from "@/components/Table";
-import UserList from "./userList";
+import UserList from "./components/userList";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),

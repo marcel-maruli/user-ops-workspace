@@ -1,4 +1,5 @@
-import UserList from "./userList";
+import { Suspense } from "react";
+import UserList from "./components/userList";
 
 const getData = async () => {
   try {
@@ -33,10 +34,12 @@ export default async function UsersPage() {
   const initialData = await getData();
 
   return (
-    <UserList
-      initialUsers={initialData.users}
-      initialPosts={initialData.posts}
-      initialTodos={initialData.todos}
-    />
+    <Suspense>
+      <UserList
+        initialUsers={initialData.users}
+        initialPosts={initialData.posts}
+        initialTodos={initialData.todos}
+      />
+    </Suspense>
   );
 }
