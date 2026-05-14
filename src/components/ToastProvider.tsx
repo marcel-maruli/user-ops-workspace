@@ -38,7 +38,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     <ToastContext.Provider value={{ showToast }}>
       {children}
 
-      <div className="fixed top-5 left-100 z-100 flex flex-col gap-3">
+      <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-3 w-fit">
         {toasts.map((toast) => (
           <div
             key={toast.id}
@@ -54,7 +54,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
             {toast.type === "error" && <AlertCircle size={18} />}
             {toast.type === "info" && <Info size={18} />}
 
-            <p className="text-sm font-medium">{toast.message}</p>
+            <p className="text-sm font-medium w-full">{toast.message}</p>
 
             <button
               onClick={() =>
@@ -69,10 +69,4 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
       </div>
     </ToastContext.Provider>
   );
-};
-
-export const useToast = () => {
-  const context = useContext(ToastContext);
-  if (!context) throw new Error("useToast must be used within ToastProvider");
-  return context;
 };

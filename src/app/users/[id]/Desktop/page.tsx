@@ -11,7 +11,7 @@ import UserDetailCard from "./components/UserDetailCard";
 import { useQueryGetAllPosts } from "@/modules/posts/contexts/posts";
 import { useQueryGetAllTodos } from "@/modules/todos/contexts/todos";
 import UserPostsTodo from "./components/UserPostsTodo";
-import { useToast } from "@/components/ToastProvider";
+import { useToast } from "@/utils/useToasts";
 
 const UsersDetailDesktop = () => {
   const { showToast } = useToast();

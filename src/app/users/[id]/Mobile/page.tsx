@@ -14,10 +14,10 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useQueryGetUserDetail } from "@/modules/users/contexts/users";
 import { useQueryGetAllPosts } from "@/modules/posts/contexts/posts";
 import { useQueryGetAllTodos } from "@/modules/todos/contexts/todos";
-import { useToast } from "@/components/ToastProvider";
 import { useParams, useRouter } from "next/navigation";
 import { DetailUserContext } from "../page";
 import MainLayout from "@/components/MainLayout";
+import { useToast } from "@/utils/useToasts";
 
 const UserDetailMobile = () => {
   const { showToast } = useToast();
